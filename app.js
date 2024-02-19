@@ -26,9 +26,6 @@ app.set('view engine', 'jade');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(session({
   name: 'session-id',
   secret: '12345-67890-09876-54321',
@@ -36,6 +33,9 @@ app.use(session({
   resave: false,
   store: new FileStore()
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 function auth (req, res, next) {
     console.log(req.user);
@@ -50,6 +50,8 @@ function auth (req, res, next) {
     }
 }
 
+app.use('/users', usersRouter);
+
 app.use(auth);
 
 app.use(logger('dev'));
@@ -59,8 +61,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use("/dishes", dishRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
