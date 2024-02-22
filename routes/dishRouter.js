@@ -44,7 +44,7 @@ dishRouter.route('/')
     });
 
 dishRouter.route('/:dishId')
-    .get(authenticate.verifyUser, (req, res, next) => {
+    .get( (req, res, next) => {
         Dishes.findById(req.params.dishId)
             .then((dish) => {
                 res.statusCode = 200;
@@ -80,7 +80,7 @@ dishRouter.route('/:dishId')
 
 
 dishRouter.route('/:dishId/comments')
-    .get(authenticate.verifyUser, (req, res, next) => {
+    .get( (req, res, next) => {
         Dishes.findById(req.params.dishId)
         .then((dish) => {
             if(dish != null){
@@ -143,7 +143,7 @@ dishRouter.route('/:dishId/comments')
     })
 
     dishRouter.route('/:dishId/comments/:commentId')
-        .get(authenticate.verifyUser, (req, res, next) => {
+        .get( (req, res, next) => {
             Dishes.findById(req.params.dishId)
                 .then((dish) => {
                     if(dish != null && dish.comments.id(req.params.commentId) != null){
