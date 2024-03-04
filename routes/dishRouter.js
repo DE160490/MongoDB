@@ -6,6 +6,7 @@ const Dishes = require('../models/dishes');
 const dishRouter = express.Router();
 
 var authenticate = require('../authenticate');
+const user = require('../models/user');
 
 dishRouter.use(bodyParser.json());
 
@@ -165,6 +166,5 @@ dishRouter.route('/:dishId/comments/:commentId')
         }, (err) => next(err))
         .catch((err) => next(err));
     });
-
     
 module.exports = dishRouter;
